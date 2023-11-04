@@ -13,21 +13,19 @@ def nextPos(rc, board):
     return arr
 
 #BFS
+import queue
 def BFS(start, end, board):
-    browse = []
-    temp = [start]
+    q = queue.Queue()
+    q.put(start)
     visited = [start]
     prev={}
-    while end not in browse:
-        browse.extend(temp)
-        temp2 = []
-        for i in temp:
-            for j in nextPos(i, board):
-                if j not in visited:
-                    temp2.append(j)
-                    visited.append(j)
-                    prev[j] = i
-        temp = temp2
+    while q.empty() == False:
+        u = q.get()
+        for v in nextPos(u, board):
+            if v not in visited:
+                visited.append(v)
+                q.put(v)
+                prev[v] = u
     path = [end]
     while start not in path:
         path.append(prev[path[len(path)-1]])
