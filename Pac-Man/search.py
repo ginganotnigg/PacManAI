@@ -2,18 +2,18 @@ def nextPos(rc, board): #rc: chuỗi lưu vị trí ban đầu
     row = int(rc[0])
     col = int(rc[1])
     arr = []
-    if row - 1 >= 0 and boards[row - 1][col] == 0:
+    if row - 1 >= 0 and board[row - 1][col] == 0:
         arr.append(str(row - 1) + rc[1])
-    if row + 1 <= len(boards) - 1 and boards[row + 1][col] == 0:
+    if row + 1 <= len(board) - 1 and board[row + 1][col] == 0:
         arr.append(str(row + 1) + rc[1])
-    if col - 1 >= 0 and boards[row][col - 1] == 0:
+    if col - 1 >= 0 and board[row][col - 1] == 0:
         arr.append(rc[0] + str(col - 1))
-    if col + 1 <= len(boards) - 1 and boards[row][col + 1] == 0:
+    if col + 1 <= len(board) - 1 and board[row][col + 1] == 0:
         arr.append(rc[0] + str(col - 1))
     return arr
 
 #BFS
-def BFS(start, end, boards):
+def BFS(start, end, board):
     browse = []
     temp = [start]
     visited = [start]
@@ -33,20 +33,6 @@ def BFS(start, end, boards):
         path.append(prev[path[len(path)-1]])
     path.reverse()
     return path
-
-def DFS_implement(path, visited, boards, pos, endPos):
-    if pos not in visited:
-        path.append(pos)
-        visited.append(pos)
-        if end in path:
-            return path
-        for i in nextPos(pos):
-            DFS_implement(path, visited, boards, i, endPos)
-
-def DFS(startPos, endPos, boards):
-    visited = []
-    path = []
-    return DFS_implement(path, visited, boards, startPos, endPos)
 
 #A_start
 def min_list(a):
