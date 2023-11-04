@@ -42,7 +42,7 @@ def min_list(a):
             minn = i
     return minn
 
-def A_star(startPos, endPos, board):
+def A_star(start, end, board):
     f_array = []
     for i in range(len(board)):
         row = []
@@ -54,7 +54,7 @@ def A_star(startPos, endPos, board):
             else:
                 row.append(9999)
         f_array.append(row)
-    openn = [startPos]
+    openn = [start]
     close = []
     prev={}
     while openn != []:
