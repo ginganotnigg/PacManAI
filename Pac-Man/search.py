@@ -1,4 +1,4 @@
-def nextPos(rc): #rc: chuỗi lưu vị trí ban đầu
+def nextPos(rc, board): #rc: chuỗi lưu vị trí ban đầu
     row = int(rc[0])
     col = int(rc[1])
     arr = []
@@ -12,23 +12,26 @@ def nextPos(rc): #rc: chuỗi lưu vị trí ban đầu
         arr.append(rc[0] + str(col - 1))
     return arr
 
-def BFS(startPos, endPos, boards): #start/endPos: vị trí bắt đầu/đích
-    path = [startPos]
-    visited = [startPos]
-    next = path
-    while endPos not in path:
-        nnext = []
-        for i in next:
-            for j in nextPos(i):
+#BFS
+def BFS(start, end, boards):
+    browse = []
+    temp = [start]
+    visited = [start]
+    prev={}
+    while end not in browse:
+        browse.extend(temp)
+        temp2 = []
+        for i in temp:
+            for j in nextPos(i, board):
                 if j not in visited:
-                    nnext.append(j)
+                    temp2.append(j)
                     visited.append(j)
-        for i in next:
-            if endPos not in path:
-                path.append(i)
-            else:
-                break
-        next = nnext
+                    prev[j] = i
+        temp = temp2
+    path = [end]
+    while start not in path:
+        path.append(prev[path[len(path)-1]])
+    path.reverse()
     return path
 
 def DFS_implement(path, visited, boards, pos, endPos):
@@ -81,7 +84,7 @@ def A_star(startPos, endPos, board):
         close.append(p)
         if p == end:
             break
-        for i in nextPos(p):
+        for i in nextPos(p, board):
             if i not in openn and i not in close:
                 openn.append(i)
                 prev[i] = p
