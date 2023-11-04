@@ -1,15 +1,15 @@
-def nextPos(rc, board): #rc: chuỗi lưu vị trí ban đầu
+def nextPos(rc, board):
     row = int(rc[0])
     col = int(rc[1])
     arr = []
-    if row - 1 >= 0 and board[row - 1][col] == 0:
+    if row - 1 >= 0 and board[row - 1][col] in (0, 3):
         arr.append(str(row - 1) + rc[1])
-    if row + 1 <= len(board) - 1 and board[row + 1][col] == 0:
+    if row + 1 <= len(board) - 1 and board[row + 1][col] in (0, 3):
         arr.append(str(row + 1) + rc[1])
-    if col - 1 >= 0 and board[row][col - 1] == 0:
+    if col - 1 >= 0 and board[row][col - 1] in (0, 3):
         arr.append(rc[0] + str(col - 1))
-    if col + 1 <= len(board) - 1 and board[row][col + 1] == 0:
-        arr.append(rc[0] + str(col - 1))
+    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] in (0, 3):
+        arr.append(rc[0] + str(col + 1))
     return arr
 
 #BFS
