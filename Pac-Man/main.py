@@ -57,7 +57,22 @@ def endPos(board):
             if board[i][j] == 2:
                 return (i, j)
     return
-
+    
+#UPDATE THE BOARD
+def update(board, path):
+	pacmanpos = (0,0)
+	#----------find pos of pacman
+	for i in range(len(board)):
+		for j in range (len(board[0])):
+			if board[i][j] == 4:
+				pacmanpos = (i,j)
+	#make the space blank as pacman leaves
+	board[ pacmanpos[0] ][ pacmanpos[1] ] = 0
+	#move pacman along the path
+	#set the coordinate of the next step in the board to 4
+	board[ path[0][0] ][ path[0][1] ] = 4
+	#then dequeue the path
+	path.pop(0)
 
 # Init variables
 
