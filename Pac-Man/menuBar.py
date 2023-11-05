@@ -1,4 +1,5 @@
 import pygame
+#!/usr/bin/python
 
 pygame.init()
 
@@ -154,7 +155,6 @@ def start_game():
     print("Algorithm:", algorithms[selected_algorithm])
     
 
-
 running = True
 while running:
     for event in pygame.event.get():
@@ -212,6 +212,7 @@ while running:
             for button in buttons:
                 if button.is_clicked(event):
                     start_game()
+                    running = False
                     break;
             
                 
