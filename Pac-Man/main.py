@@ -41,7 +41,7 @@ def read_file(file_path): #Code của Đăng
                         maps.append(current_array)
             else:
                 pass
-        return maps
+    return maps
 # Read boards
 
 def startPos(board):
