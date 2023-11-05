@@ -2,13 +2,13 @@ def nextPos(rc, board):
     row = rc[0]
     col = rc[1]
     arr = []
-    if row - 1 >= 0 and board[row - 1][col] in (0, 3):
+    if row - 1 >= 0 and board[row - 1][col] in (0, 2):
         arr.append((row - 1, rc[1]))
-    if row + 1 <= len(board) - 1 and board[row + 1][col] in (0, 3):
+    if row + 1 <= len(board) - 1 and board[row + 1][col] in (0, 2):
         arr.append((row + 1, rc[1]))
-    if col - 1 >= 0 and board[row][col - 1] in (0, 3):
+    if col - 1 >= 0 and board[row][col - 1] in (0, 2):
         arr.append((rc[0], col - 1))
-    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] in (0, 3):
+    if col + 1 <= len(board[0]) - 1 and board[row][col + 1] in (0, 2):
         arr.append((rc[0], col + 1))
     return arr
 
