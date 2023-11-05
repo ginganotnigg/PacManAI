@@ -1,4 +1,4 @@
-from search import BFS
+from search import BFS, DFS, GBFS, A_star
 import pygame
 import time
 
@@ -77,16 +77,18 @@ def draw_text():
     score_text = font.render(f'Score: {score}', True, 'white')
     screen.blit(score_text, (100, 770))
     time_text = font.render(f'Time: {time}', True, 'white')
-    screen.blit(time_text, (330, 770))
+    screen.blit(time_text, (325, 770))
     length_text = font.render(f'Length: {length}', True, 'white')
-    screen.blit(length_text, (570, 770))
+    screen.blit(length_text, (565, 770))
 
 
 # Execute
 
 pacman_pos = startPos(level)
 end = endPos(level)
-path = BFS(pacman_pos, end, level)
+# Thay thuat toan o day (DFS, BFS, GBFS, A*)
+path, cost = DFS(pacman_pos, end, level)
+len_path = len(path)
 frame_count = 0
 frame_delay = 5
 
@@ -111,6 +113,8 @@ while run:
         frame_count = 0
         if current_cell == end:
             game_over = True
+            score -= cost
+            length += len_path
             time += float("{:.3f}".format(counter / 60))
 
     for event in pygame.event.get():
