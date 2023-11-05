@@ -80,30 +80,12 @@ def GBFS(start, end, board):
         path.append(prev[path[len(path)-1]])
     path.reverse()
     return path, len(visited)
-
-#DFS
-def DFS_run(start, end, visited, board, prev):
-    visited.append(start)
-    for v in nextPos(start, board):
-        if v not in visited:
-            prev[v] = start
-            if v == end:
-                return
-            DFS_run(v, end, visited, board, prev)
-
-def DFS(start, end, board):
-    visited = [start]
-    prev = {}
-    DFS_run(start, end, visited, board, prev)
-    path = [end]
-    while start not in path:
-        path.append(prev[path[len(path)-1]])
-    path.reverse()
-    return path, len(visited)
+        
 
 #A_star
 def A_star(start, end, board):
     f_array = []
+    visited = []
     for i in range(len(board)):
         row = []
         for j in range(len(board[0])):
@@ -133,7 +115,28 @@ def A_star(start, end, board):
         for i in nextPos(p, board):
             if i not in openn and i not in close:
                 openn.append(i)
+                visited.append(i)
                 prev[i] = p
+    path = [end]
+    while start not in path:
+        path.append(prev[path[len(path)-1]])
+    path.reverse()
+    return path, len(visited)
+
+#DFS
+def DFS_run(start, end, visited, board, prev):
+    visited.append(start)
+    for v in nextPos(start, board):
+        if v not in visited:
+            prev[v] = start
+            if v == end:
+                return
+            DFS_run(v, end, visited, board, prev)
+
+def DFS(start, end, board):
+    visited = [start]
+    prev = {}
+    DFS_run(start, end, visited, board, prev)
     path = [end]
     while start not in path:
         path.append(prev[path[len(path)-1]])
