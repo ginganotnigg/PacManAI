@@ -21,7 +21,27 @@ def readFile(fileName):
     board[pacX][pacY] = 4
     return board
 
+def read_file(file_path): #Code của Đăng
+    with open(file_path, 'r') as file:
+        maps = []
+        current_array = []
 
+        for line in file:
+            line = line.strip()
+            if line:
+                values = line.split()
+                if len(values) == 2:
+                    rows = int(values[0])
+                    cols = int(values[1])
+                    current_array = []
+                else:
+                    row_values = [int(value) for value in values]
+                    current_array.append(row_values)
+                    if len(current_array) == rows:
+                        maps.append(current_array)
+            else:
+                pass
+        return maps
 # Read boards
 
 def startPos(board):
