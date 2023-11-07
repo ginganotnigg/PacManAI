@@ -1,5 +1,4 @@
 import pygame
-#!/usr/bin/python
 
 pygame.init()
 
@@ -14,13 +13,13 @@ text_boxes = []
 buttons = []
 
 # Thay đổi levels, maps, al tại đây 
-levels = ["Easy", "Medium", "Hard"]
+levels = ["1", "2"]
 selected_level = 0
 len_level = len(levels)
-maps = ["Map 1", "Map 2", "Map 3"]
+maps = ["1", "2", "3", "4", "5"]
 selected_map = 0
 len_map = len(maps)
-algorithms = ["DFS", "A*", "Noen"]
+algorithms = ["DFS", "A*", "BFS", "GBFS"]
 selected_algorithm = 0
 len_algorithm = len(algorithms)
 
@@ -52,7 +51,7 @@ class Button2:
     def check_list(self):
         mouse_pos = pygame.mouse.get_pos()
         left_click = pygame.mouse.get_pressed()[0]
-        bt_rect = pygame.rect.Rect((self.x,self.y), (140, 60))
+        bt_rect = pygame.rect.Rect((self.x, self.y), (140, 60))
         if left_click and bt_rect.collidepoint(mouse_pos) and self.enable :
             return True
         else: 
@@ -72,7 +71,7 @@ class Button:
         self.bt_rect = pygame.rect.Rect((self.x,self.y), (60, 30))   
         pygame.draw.rect(screen, 'gray', self.bt_rect, 0, 5)
         pygame.draw.rect(screen, 'black', self.bt_rect, 2, 5)
-        screen.blit(bt_text,(self.x+3,self.y+3))
+        screen.blit(bt_text,(self.x+3, self.y+3))
     
     def is_clicked(self, event):
         return self.bt_rect.collidepoint(event.pos)
@@ -130,7 +129,7 @@ def draw_menu():
     text_algorithm_down = font.render("<", True, (255, 255, 255))
     text_algorithm_down_rect = text_algorithm_down.get_rect()
     text_algorithm_down_rect.center = (370, 260)
-    text_boxes.append({"text": "algorithm", "rect": text_algorithm_down_rect,"action":"down"})
+    text_boxes.append({"text": "algorithm", "rect": text_algorithm_down_rect, "action":"down"})
     screen.blit(text_algorithm_down,text_algorithm_down_rect)
     
     text_listalgorithm = font.render(f"{algorithms[selected_algorithm]}", True, WHITE)
@@ -139,7 +138,7 @@ def draw_menu():
     text_algorithm_up = font.render(">", True, (255, 255, 255))
     text_algorithm_up_rect = text_algorithm_up.get_rect()
     text_algorithm_up_rect.center = (570, 260)
-    text_boxes.append({"text": "algorithm", "rect": text_algorithm_up_rect,"action":"up"})
+    text_boxes.append({"text": "algorithm", "rect": text_algorithm_up_rect, "action":"up"})
     screen.blit(text_algorithm_up,text_algorithm_up_rect)
     
     global bt_run  
@@ -147,13 +146,10 @@ def draw_menu():
     buttons.append(button_start)
 
 
-def start_game():
-    # Initialize the game with the selected options
-    print("Starting the game with the following options:")
-    print("Level:", levels[selected_level])
-    print("Screen:", maps[selected_map])
-    print("Algorithm:", algorithms[selected_algorithm])
+def start_game_params():
+    return int(levels[selected_level]), int(maps[selected_map]), selected_algorithm
     
+
 
 running = True
 while running:
@@ -165,63 +161,60 @@ while running:
             for box in text_boxes:
                 if box["rect"].collidepoint(event.pos):
                     if box["action"]=='up' and box["text"]=="Level":
-                        print(f"Đã click vào up level")
+                        #print(f"Đã click vào up level")
                         if selected_level == len_level - 1:
-                            break;
+                            break
                         else: 
-                            selected_level +=1;
-                        break;
+                            selected_level += 1
+                        break
                     elif box["action"]=='down' and box["text"]=="Level":
-                        print(f"Đã click vào down level")
+                        #print(f"Đã click vào down level")
                         if selected_level == 0:
-                            break;
+                            break
                         else: 
-                            selected_level -= 1;
-                        break;
+                            selected_level -= 1
+                        break
                     elif box["action"]=='up' and box["text"]=="map":
-                        print(f"Đã click vào up level")
+                        #print(f"Đã click vào up level")
                         if selected_map == len_map - 1:
-                            break;
+                            break
                         else: 
-                            selected_map +=1;
-                        break;
+                            selected_map += 1
+                        break
                     elif box["action"]=='down' and box["text"]=="map":
-                        print(f"Đã click vào down level")
+                        #print(f"Đã click vào down level")
                         if selected_map == 0:
-                            break;
+                            break
                         else: 
-                            selected_map -= 1;
-                        break;
+                            selected_map -= 1
+                        break
                     elif box["action"]=='up' and box["text"]=="algorithm":
-                        print(f"Đã click vào up level")
+                        #print(f"Đã click vào up level")
                         if selected_algorithm == len_algorithm - 1:
-                            break;
+                            break
                         else: 
-                            selected_algorithm +=1;
-                        break;
+                            selected_algorithm += 1
+                        break
                     elif box["action"]=='down' and box["text"]=="algorithm":
-                        print(f"Đã click vào down level")
+                        #print(f"Đã click vào down level")
                         if selected_algorithm == 0:
-                            break;
+                            break
                         else: 
-                            selected_algorithm -= 1;
-                        break;
+                            selected_algorithm -= 1
+                        break
                     else:
                         pass
             
             for button in buttons:
                 if button.is_clicked(event):
-                    start_game()
+                    start_game_params()
                     running = False
-                    break;
-            
-                
-            
-            
+                    break
+      
     screen.fill((52, 78, 91))
     draw_menu()
     
 
     pygame.display.flip()
 
-pygame.quit()
+pygame.quit()      

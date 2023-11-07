@@ -39,7 +39,7 @@ def BFS(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, len(visited)
+    return path, visited
 
 #GBFS
 def GBFS(start, end, board):
@@ -79,7 +79,7 @@ def GBFS(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, len(visited)
+    return path, visited
         
 
 #A_star
@@ -121,7 +121,7 @@ def A_star(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, len(visited)
+    return path, visited
 
 #DFS
 def DFS_run(start, end, visited, board, prev):
@@ -141,4 +141,4 @@ def DFS(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, len(visited)
+    return path, visited
