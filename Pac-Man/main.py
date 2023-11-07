@@ -61,7 +61,7 @@ maps = read_file('map.txt')
 counter = 0
 score = 0
 time = 0 
-length = 0
+cost = 0
 pac_img = []
 frame_count = 0
 frame_delay = 5
@@ -69,19 +69,19 @@ run = True
 game_over = False
 for i in range(1, 5):
     pac_img.append(pygame.transform.scale(pygame.image.load(f'assets/{i}.png'), (30, 30)))
+food_img = pygame.transform.scale(pygame.image.load(f'assets/apple.svg'), (22, 26))
 mons_img = pygame.transform.scale(pygame.image.load(f'assets/pink.png'), (26, 26))
 
 
 # Function
 
 def draw_board(mp):
-    screen.fill('black')
     for i in range(len(mp)):
         for j in range(len(mp[i])):
             if mp[i][j] == 1:
                 pygame.draw.rect(screen, 'blue', pygame.Rect(j * pt + 2, i * pt + 2, pt - 4, pt - 4))
             if mp[i][j] == 2:
-                pygame.draw.circle(screen, 'white', ((j + 0.5) * pt, (i + 0.5) * pt), 6)
+                screen.blit(food_img, (j * pt + 4, i * pt + 2))
             if mp[i][j] == 3:
                 screen.blit(mons_img, (j * pt + 2, i * pt + 2))
             if mp[i][j] == 4:
@@ -92,8 +92,8 @@ def draw_text():
     screen.blit(score_text, (100, 770))
     time_text = font.render(f'Time: {time}', True, 'white')
     screen.blit(time_text, (325, 770))
-    length_text = font.render(f'Length: {length}', True, 'white')
-    screen.blit(length_text, (565, 770))
+    cost_text = font.render(f'Cost: {cost}', True, 'white')
+    screen.blit(cost_text, (565, 770))
 
 
 def draw_visited(start, path, visited, end):
@@ -102,10 +102,10 @@ def draw_visited(start, path, visited, end):
         if x != end and x != start and x != path:
             pygame.draw.circle(screen, 'cyan', ((x[1] + 0.5) * pt, (x[0] + 0.5) * pt), 3)
 
-def draw_path(path, end):
+def draw_path(start, path, end):
     for x in path:
-        if x != end:
-            pygame.draw.circle(screen, 'yellow', ((x[1] + 0.5) * pt, (x[0] + 0.5) * pt), 3)
+        if x != end and x != start:
+            pygame.draw.circle(screen, 'yellow', ((x[1] + 0.5) * pt, (x[0] + 0.5) * pt), 5)
 
 
 # Execute
@@ -129,14 +129,12 @@ def solve(lvl, mapIdx, algoIdx):
         path, visited = GBFS(pacman_pos, end, mp)
     else:
         path, visited = DFS(pacman_pos, end, mp)
-    cost = len(visited)
-    return mp, pacman_pos, end, path, visited, cost
+    return mp, pacman_pos, end, path, visited
 
 lvl, mapIdx, algo = start_game_params()
-mp, pacman_pos, end, path, visited, cost = solve(lvl, mapIdx, algo)
+mp, pacman_pos, end, path, visited = solve(lvl, mapIdx, algo)
 start = pacman_pos
-saved_path = path.copy()
-len_path = len(path)
+saved_path = [x for x in path]
 
 while run:
     timer.tick(fps)
@@ -146,10 +144,12 @@ while run:
         counter = 0
         if not game_over: time += 1
 
-    draw_board(mp)
+    screen.fill('black')
     draw_text()
     draw_visited(start, saved_path, visited, end)
-    
+    draw_path(start, saved_path, end)
+    draw_board(mp)
+
     if len(path) > 0 and frame_count >= frame_delay:
         current_cell = path.pop(0)
         mp[pacman_pos[0]][pacman_pos[1]] = 0
@@ -158,9 +158,9 @@ while run:
         frame_count = 0
         if current_cell == end:
             game_over = True
-            draw_path(saved_path, end)
-            score -= cost
-            length += len_path
+            score -= len(saved_path)
+            score += 20
+            cost += len(visited)
             time += float("{:.3f}".format(counter / 60))
     frame_count += 1
 
