@@ -4,6 +4,7 @@ pygame.init()
 
 # Tạo cửa sổ trò chơi
 screen = pygame.display.set_mode((800, 400))
+pygame.display.set_caption('PACMAN - MENU')
 
 # Tạo font cho văn bản
 font = pygame.font.Font(None, 36)
@@ -13,7 +14,7 @@ text_boxes = []
 buttons = []
 
 # Thay đổi levels, maps, al tại đây 
-levels = ["1", "2"]
+levels = ["1", "2", "3"]
 selected_level = 0
 len_level = len(levels)
 maps = ["1", "2", "3", "4", "5"]

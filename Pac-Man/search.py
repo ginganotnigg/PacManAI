@@ -39,7 +39,8 @@ def BFS(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, visited
+    path = path[1:]
+    return path, visited, end
 
 #GBFS
 def GBFS(start, end, board):
@@ -79,7 +80,8 @@ def GBFS(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, visited
+    path = path[1:]
+    return path, visited, end
         
 
 #A_star
@@ -113,7 +115,7 @@ def A_star(start, end, board):
         if p == end:
             break
         for i in nextPos(p, board):
-            if i not in openn and i not in close:
+            if i not in openn and i not in close: 
                 openn.append(i)
                 visited.append(i)
                 prev[i] = p
@@ -121,7 +123,8 @@ def A_star(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, visited
+    path = path[1:]
+    return path, visited, end
 
 #DFS
 def DFS_run(start, end, visited, board, prev):
@@ -141,4 +144,5 @@ def DFS(start, end, board):
     while start not in path:
         path.append(prev[path[len(path)-1]])
     path.reverse()
-    return path, visited
+    path = path[1:]
+    return path, visited, end
