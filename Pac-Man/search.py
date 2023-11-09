@@ -55,25 +55,25 @@ def GBFS(start, end, board):
                 row.append(9999)
         h_array.append(row)
         
-    openn = [start]
-    close = []
+    browsing = [start]
+    browsed = []
     prev={}
-    while openn != []:
+    while browsing != []:
         list = []
-        for i in openn:
+        for i in browsing:
             list.append(h_array[i[0]][i[1]])
         p = ''
-        for i in openn:
+        for i in browsing:
             if h_array[i[0]][i[1]] == min_list(list):
                 p = i
                 break
-        openn.remove(p)
-        close.append(p)
+        browsing.remove(p)
+        browsed.append(p)
         if p == end:
             break
         for i in nextPos(p, board):
-            if i not in openn and i not in close:
-                openn.append(i)
+            if i not in browsing and i not in browsed:
+                browsing.append(i)
                 visited.append(i)
                 prev[i] = p
     path = [end]
