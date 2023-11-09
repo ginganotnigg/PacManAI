@@ -4,7 +4,7 @@
   * [21120045 - Bùi Hồng Đăng](https://github.com/bhdang311003)
   * [21120182 - Phan Trí Nhân](https://github.com/TreeDude03)
   * [21120413 - Bùi Thiên Bảo](https://github.com/baobui1509)
-  * [2012.... - Nguyễn Hoài Sơn](https://github.com/nguyenhoaisonHCMUS)
+  * [20120564 - Nguyễn Hoài Sơn](https://github.com/nguyenhoaisonHCMUS)
 
 <h1 align='center'>PROJECT 1 - SEARCH (PACMAN)</h1>
 
